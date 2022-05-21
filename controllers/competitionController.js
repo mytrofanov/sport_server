@@ -1,4 +1,5 @@
 const ApiError = require('../error/ApiError')
+const mongoClient = require('.././db')
 
 class CompetitionController {
     async create(req, res, next) {
@@ -30,12 +31,26 @@ class CompetitionController {
         }
     }
 
-    async getAll(req, res) {
+    async getAllCollections(req, res, next) {
+        try {
+            // const football = mongoClient.db().collection('footsball')
+            // const competition = await football.findOne({home: "Dinamo"})
+            // console.log(competition)
+            // const competitions = mongoClient.db().listCollections()
+            const games = mongoClient.db().collection('games')
+            const typeFootball = await games.findOne({game:'football'})
+            const typeChess = await games.findOne({game:'chess'})
+            const allTypes = await games.find({})
 
-
-
+            return res.json(allTypes)
+        }catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
+    async getAllinCollection(req, res) {
+
+    }
     async getOne(req, res) {
 
     }

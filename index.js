@@ -1,15 +1,11 @@
 require('dotenv').config()
-const {MongoClient, ServerApiVersion} = require('mongodb');
+const mongoClient = require('./db')
 const express = require('express')
 const cors = require('cors')
 const router = require('./rotes/index')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const PORT = process.env.PORT || 5000
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hvlii.mongodb.net/?retryWrites=true&w=majority`;
-const client = new MongoClient(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true, serverApi: ServerApiVersion.v1
-});
+
 const app = express()
 app.use(
     cors({
@@ -23,14 +19,24 @@ app.use(errorHandler) // must be on the last place (last MiddleWare)
 
 const start = async () => {
     try {
-        await client.connect()
+        await mongoClient.connect()
         console.log(`Connection to MongoDB cluster successful`)
         app.listen(PORT, () => {
             console.log("Server started on PORT: ", PORT)
         })
-        const football = client.db().collection('footsball')
-        const competition = await football.findOne({home: "Dinamo"})
-        console.log(competition)
+        // const football = mongoClient.db().collection('football')
+        // await mongoClient.db().createCollection('games')
+
+        // await mongoClient.db().collection('games').insertMany([{game:'football'},
+        //     {game:'tennis'},{game:'chess'},])
+
+        const games = mongoClient.db().collection('games')
+
+        const typeFootball = await games.findOne({game:'football'})
+        const allTypes = await games.find()
+
+        console.log('types: ', typeFootball)
+        console.log('allTypes: ', allTypes)
     } catch (e) {
         console.log('Unable to connect to the database:', e)
     }
