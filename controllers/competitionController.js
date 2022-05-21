@@ -1,7 +1,6 @@
-const path = require('path')
 const ApiError = require('../error/ApiError')
 
-class DeviceController {
+class CompetitionController {
     async create(req, res, next) {
         try {
 
@@ -74,4 +73,4 @@ class DeviceController {
 
 }
 
-module.exports = new DeviceController()
+module.exports = new CompetitionController()

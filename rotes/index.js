@@ -1,8 +1,8 @@
 const Router = require('express')
 const router = new Router()
-const deviceRouter = require('./deviceRouter')
+const competitionRouter = require('./competitionRouter')
 
-router.use('/device', deviceRouter)
+router.use('/competition', competitionRouter)
 
 
 module.exports = router
