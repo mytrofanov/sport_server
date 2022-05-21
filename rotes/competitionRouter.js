@@ -12,6 +12,7 @@ router.post('/del',  competitionController.delete )
 // GameTypes:
 router.get('/games', competitionController.getAllGameTypes )
 router.post('/games', competitionController.createGameTypes )
+router.post('/game', competitionController.getOneGameType )
 router.post('/delgame', competitionController.deleteGameTypes )
 
 router.get('/', competitionController.getAllFromGame )

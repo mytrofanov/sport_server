@@ -66,6 +66,18 @@ class CompetitionController {
             next(ApiError.badRequest(e.message))
         }
     }
+    async getOneGameType(req, res, next) {
+        let {id} = req.query
+        try {
+            if (id) {
+                const types = mongoClient.db().collection('games')
+                const game = await types.findOne({_id: ObjectId(id)})
+                return res.json(game)
+            } else res.json('The ID cannot be empty')
+        }catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+    }
 
 
     async getAllFromGame(req, res) {
