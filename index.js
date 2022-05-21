@@ -24,19 +24,20 @@ const start = async () => {
         app.listen(PORT, () => {
             console.log("Server started on PORT: ", PORT)
         })
-        // const football = mongoClient.db().collection('football')
-        // await mongoClient.db().createCollection('games')
 
+
+        // await mongoClient.db().createCollection('games')
         // await mongoClient.db().collection('games').insertMany([{game:'football'},
         //     {game:'tennis'},{game:'chess'},])
 
-        const games = mongoClient.db().collection('games')
-
-        const typeFootball = await games.findOne({game:'football'})
-        const allTypes = await games.find()
-
-        console.log('types: ', typeFootball)
-        console.log('allTypes: ', allTypes)
+        // const games = mongoClient.db().collection('games')
+        //
+        // const typeFootball = await games.findOne({game:'football'})
+        // const allTypes = await games.find({}).toArray()
+        // const obj = JSON.parse(JSON.stringify(allTypes));
+        //
+        // console.log('typeFootball: ', typeFootball)
+        // console.log('allTypes: ', allTypes)
     } catch (e) {
         console.log('Unable to connect to the database:', e)
     }

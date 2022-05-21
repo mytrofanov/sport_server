@@ -8,8 +8,13 @@ router.post('/updateInfo',  competitionController.updateInfo )
 router.post('/createInfo',  competitionController.createInfo )
 router.post('/delInfo',  competitionController.deleteInfo)
 router.post('/del',  competitionController.delete )
-router.get('/games', competitionController.getAllCollections )
-router.get('/', competitionController.getAllinCollection )
+
+// GameTypes:
+router.get('/games', competitionController.getAllGameTypes )
+router.post('/games', competitionController.createGameTypes )
+router.post('/delgame', competitionController.deleteGameTypes )
+
+router.get('/', competitionController.getAllFromGame )
 router.get('/:id', competitionController.getOne )
 
 
