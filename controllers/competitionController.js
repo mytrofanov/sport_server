@@ -7,33 +7,40 @@ const types = mongoClient.db().collection('games')
 
 class CompetitionController {
     async createCompetition(req, res, next) {
-        let {competition, type, player1, player2, score, description} = req.query
+        let {competition, type, player1, player2, score, description, active} = req.query
 
         try {
-            const newCompetition = await competitions.insertOne({
-                'Назва змагання': competition, 'Тип змагання': type,
-                'Ігрок1/Команда1': player1, 'Ігрок2/Команда2': player2, 'Рахунок': score, 'Коментарі': description
-            })
-            return res.json(newCompetition)
+            const gameType = await types.findOne({game: type})
+            if (gameType) {
+                const newCompetition = await competitions.insertOne({
+                    'Назва змагання': competition, 'Тип змагання': type,
+                    'Ігрок1/Команда1': player1, 'Ігрок2/Команда2': player2, 'Рахунок': score, 'Коментарі': description,
+                    'Відбувається зараз': active,
+                })
+                return res.json(newCompetition)
+            } else return res.json('Можна вставити лише існуючий тип змагань')
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
     }
 
     async updateCompetition(req, res, next) {
-        let {CompetitionId, competition, type, player1, player2, score, description} = req.query
+        let {CompetitionId, competition, type, player1, player2, score, description, active} = req.query
         try {
-            if (CompetitionId) {
-                const updatedCompetition = await competitions.updateOne({_id: ObjectId(CompetitionId)},
-                    {
-                        $set: {
-                            'Назва змагання': competition, 'Тип змагання': type,
-                            'Ігрок1/Команда1': player1, 'Ігрок2/Команда2': player2,
-                            'Рахунок': score, 'Коментарі': description
-                        }
-                    })
-                return res.json(updatedCompetition)
-            } else res.json('The CompetitionId cannot be empty')
+            if (CompetitionId && type) {
+                const gameType = await types.findOne({game: type})
+                if (gameType) {
+                    const updatedCompetition = await competitions.updateOne({_id: ObjectId(CompetitionId)},
+                        {
+                            $set: {
+                                'Назва змагання': competition, 'Тип змагання': type,
+                                'Ігрок1/Команда1': player1, 'Ігрок2/Команда2': player2, 'Рахунок': score,
+                                'Коментарі': description, 'Відбувається зараз': active,
+                            }
+                        })
+                    return res.json(updatedCompetition)
+                } else return res.json('Можна вставити лише існуючий тип змагань')
+            } else res.json('Тип змагання та CompetitionId не можуть бути пустими')
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
@@ -46,8 +53,7 @@ class CompetitionController {
                 const deletedCompetition = await competitions.deleteOne({_id: ObjectId(CompetitionId)})
                 return res.json(deletedCompetition)
             } else res.json('The CompetitionId cannot be empty')
-        }
- catch (e) {
+        } catch (e) {
             next(ApiError.badRequest(e.message))
         }
     }

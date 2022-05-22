@@ -25,11 +25,10 @@ const start = async () => {
             console.log("Server started on PORT: ", PORT)
         })
 
-        await mongoClient.db().createCollection('competitions')
+        // await mongoClient.db().createCollection('competitions')
         // await mongoClient.db().createCollection('games')
         // await mongoClient.db().collection('games').insertMany([{game:'football'},
         //     {game:'tennis'},{game:'chess'},])
-
         // const games = mongoClient.db().collection('games')
         //  const competitions = mongoClient.db().collection('competitions')
         //

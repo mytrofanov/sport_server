@@ -3,7 +3,7 @@ const router = new Router()
 const competitionController = require('../controllers/competitionController')
 
 // Competitions:
-router.post('/competition', competitionController.createCompetition )
+router.post('/createCompetition', competitionController.createCompetition )
 router.post('/updateCompetition',  competitionController.updateCompetition )
 router.post('/deleteCompetition',  competitionController.deleteCompetition )
 router.get('/competitions',  competitionController.getAllCompetitions )
