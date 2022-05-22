@@ -13,9 +13,9 @@ class CompetitionController {
             const gameType = await types.findOne({game: type})
             if (gameType) {
                 const newCompetition = await competitions.insertOne({
-                    'Назва змагання': competition, 'Тип змагання': type,
-                    'Ігрок1/Команда1': player1, 'Ігрок2/Команда2': player2, 'Рахунок': score, 'Коментарі': description,
-                    'Відбувається зараз': active,
+                    name: competition, type: type,
+                    player1: player1, player2: player2, score: score, description: description,
+                    active: active,
                 })
                 return res.json(newCompetition)
             } else return res.json('Можна вставити лише існуючий тип змагань')
@@ -33,9 +33,9 @@ class CompetitionController {
                     const updatedCompetition = await competitions.updateOne({_id: ObjectId(CompetitionId)},
                         {
                             $set: {
-                                'Назва змагання': competition, 'Тип змагання': type,
-                                'Ігрок1/Команда1': player1, 'Ігрок2/Команда2': player2, 'Рахунок': score,
-                                'Коментарі': description, 'Відбувається зараз': active,
+                                name: competition, type: type,
+                                player1: player1, player2: player2, score: score, description: description,
+                                active: active,
                             }
                         })
                     return res.json(updatedCompetition)
