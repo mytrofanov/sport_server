@@ -2,12 +2,9 @@ const Router = require('express')
 const router = new Router()
 const competitionController = require('../controllers/competitionController')
 
-router.post('/', competitionController.create )
-router.post('/update',  competitionController.update )
-router.post('/updateInfo',  competitionController.updateInfo )
-router.post('/createInfo',  competitionController.createInfo )
-router.post('/delInfo',  competitionController.deleteInfo)
-router.post('/del',  competitionController.delete )
+router.post('/competition', competitionController.createCompetition )
+router.post('/updateCompetition',  competitionController.updateCompetition )
+router.post('/deleteCompetition',  competitionController.deleteCompetition )
 
 // GameTypes:
 router.get('/games', competitionController.getAllGameTypes )
@@ -15,8 +12,7 @@ router.post('/games', competitionController.createGameTypes )
 router.post('/game', competitionController.getOneGameType )
 router.post('/delgame', competitionController.deleteGameTypes )
 
-router.get('/', competitionController.getAllFromGame )
-router.get('/:id', competitionController.getOne )
+
 
 
 module.exports = router
