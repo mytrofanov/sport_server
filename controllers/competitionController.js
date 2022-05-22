@@ -52,6 +52,15 @@ class CompetitionController {
         }
     }
 
+    async getAllCompetitions(req, res, next) {
+        try {
+            const allCompetitions = await competitions.find({}).toArray()
+            return res.json(allCompetitions)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+    }
+
     async getAllGameTypes(req, res, next) {
         try {
             const games = mongoClient.db().collection('games')
